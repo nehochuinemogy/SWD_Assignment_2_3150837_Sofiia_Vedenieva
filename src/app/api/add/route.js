@@ -48,6 +48,46 @@ export async function POST(request) {
         conn.release();
         return NextResponse.json({ message: 'Appliance exists' }, { status: 409 });
       }
+
+      //checking if email exists
+      const [existUsers] = await conn.execute(
+        'SELECT UserID FROM Users WHERE Email = ?',
+        [data.email]
+      );
+
+      let userId;
+
+      if (existUsers.length > 0) {
+        // if exists- reusing id
+        userId = existUsers[0].UserID;
+      } else {
+        // inserting user data
+        const [insertResult] = await conn.execute(
+          `INSERT INTO Users (FirstName, LastName, Address, Mobile, Email, Eircode)
+           VALUES (?, ?, ?, ?, ?, ?)`,
+          [data.firstName, data.lastName, data.address, data.mobile, data.email, data.eircode]
+        );
+        userId = insertResult.insertId;
+      }
+
+      //inserting appliacne data with user data connected by user id
+      await conn.execute(
+        `INSERT INTO Appliances
+           (UserID, ApplianceType, Brand, ModelNumber, SerialNumber,
+            PurchaseDate, WarrantyExpirationDate, Cost)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          userId,
+          data.applianceType,
+          data.brand,
+          data.model,
+          data.serial,
+          data.purchase,
+          data.warranty,
+          parseFloat(data.cost),
+        ]
+      );
+
 }catch {
 
 }
