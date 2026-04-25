@@ -12,20 +12,19 @@ const APPLIANCE_TYPES = [
 ];
 
 export default function UpdatePage() {
-  //searching serial number
   const [serialInput,   setSerialInput]   = useState('');
   const [searchError,   setSearchError]   = useState('');
   const [searchLoading, setSearchLoading] = useState(false);
 
-  // Editing form
   const [form,          setForm]          = useState(null);
   const [errors,        setErrors]        = useState({});
   const [status,        setStatus]        = useState(null);
 
-  //finding applaince
+  //searching appliance by serial num
   async function handleLookup(e) {
     e.preventDefault();
 
+    //validating serial number
     if (!serialRegex.test(serialInput)) {
       setSearchError('Serial number invalid (3–50 characters)');
       return;
@@ -34,14 +33,15 @@ export default function UpdatePage() {
     setSearchError('');
 
     try {
+      //API call to search for appliance
       const response = await fetch(
         `/api/search?serial=${encodeURIComponent(serialInput)}`
       );
       const data = await response.json();
 
+      //ia appliance found populating form
       if (response.ok && data.appliance) {
         const a = data.appliance;
-        //pre filling form 
         setForm({
           applianceID:   a.ApplianceID,
           userID:        a.UserID,
@@ -64,19 +64,16 @@ export default function UpdatePage() {
       }
     } catch {
       setSearchError('Error. Please try again.');
-    } finally {
-      setSearchLoading(false);
-    }
+    } 
   }
 
-  // update one field and clear its error
+  //handling form
   function handleFieldChange(e) {
     const { name, value } = e.target;
     setForm(prev => ({ ...prev, [name]: value }));
     setErrors(prev => ({ ...prev, [name]: '' }));
   }
-
-  //client side validation
+//validation form
   function validateForm() {
     const fieldErrors = {};
 
@@ -112,14 +109,13 @@ export default function UpdatePage() {
     return Object.keys(fieldErrors).length === 0;
   }
 
-  // sending data
+    //sending updated appliacne data 
   async function handleUpdate(e) {
     e.preventDefault();
     if (!validateForm()) return;
-
-    setSubmitLoading(true);
     setStatus(null);
 
+    //sending put request
     try {
       const response = await fetch('/api/update', {
         method: 'PUT',
@@ -128,15 +124,13 @@ export default function UpdatePage() {
       });
       const data = await response.json();
 
-      //status messages
       if (response.ok) {
         setStatus({ type: 'success', message: data.message });
       } else {
         setStatus({ type: 'error', message: data.message });
       }
-    } catch {
-      setStatus({ type: 'error', message: 'Error. Please try again.' });
-    } 
+  }catch {
+    setStatus({ type: 'error', message: 'Error. Please try again.' });
   }
-
+}
 }

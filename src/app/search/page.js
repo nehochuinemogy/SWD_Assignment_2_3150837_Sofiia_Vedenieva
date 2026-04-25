@@ -79,7 +79,7 @@ export default function SearchPage() {
             <div className="input"><label>Cost</label><p>€{parseFloat(result.cost).toFixed(2)}</p></div>
           </div>
 
-          <h2>Registered Owner</h2>
+          <h2>User: </h2>
           <div className="form">
             <div className="input"><label>Name</label><p>{result.firstName} {result.lastName}</p></div>
             <div className="input"><label>Address</label><p>{result.address}</p></div>
