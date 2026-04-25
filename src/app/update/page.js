@@ -14,7 +14,6 @@ const APPLIANCE_TYPES = [
 export default function UpdatePage() {
   const [serialInput,   setSerialInput]   = useState('');
   const [searchError,   setSearchError]   = useState('');
-  const [searchLoading, setSearchLoading] = useState(false);
 
   const [form,          setForm]          = useState(null);
   const [errors,        setErrors]        = useState({});
