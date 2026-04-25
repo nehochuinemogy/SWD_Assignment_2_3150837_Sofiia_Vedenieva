@@ -37,6 +37,43 @@ export async function PUT(request) {
       return NextResponse.json({ message: applianceCheck.message }, { status: 400 });
 
     const conn = await pool.getConnection();
-}catch {
-}
+    
+    try {
+      // updating appliance data 
+      await conn.execute(
+        `UPDATE Appliances
+         SET ApplianceType = ?, Brand = ?, ModelNumber = ?,
+             PurchaseDate = ?, WarrantyExpirationDate = ?, Cost = ?
+         WHERE ApplianceID = ?`,
+        [
+          data.applianceType, data.brand, data.model,
+          data.purchase, data.warranty,
+          parseFloat(data.cost), data.applianceID,
+        ]
+      );
+
+      // updating user 
+      await conn.execute(
+        `UPDATE Users
+         SET FirstName = ?, LastName = ?, Address = ?,
+             Mobile = ?, Email = ?, Eircode = ?
+         WHERE UserID = ?`,
+        [
+          data.firstName, data.lastName, data.address,
+          data.mobile, data.email, data.eircode, data.userID,
+        ]
+      );
+
+      conn.release();
+      return NextResponse.json({ message: 'Appliance updated successfully' }, { status: 200 });
+
+    } catch (dbError) {
+      conn.release();
+      throw dbError;
+    }
+
+  } catch (error) {
+    console.error('error');
+    return NextResponse.json({ message: 'error' }, { status: 500 });
+  }
 }
