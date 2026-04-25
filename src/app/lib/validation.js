@@ -7,7 +7,7 @@ export const nameRegex = /^[A-Za-z\s'-]{2,50}$/;
 export const addressRegex = /^[A-Za-z0-9\s,.-]{5,150}$/;
 
 //validation for irish mobile number
-export const numberRegex = /^(\+353|0)(8[3-9])\d{7}$/;
+export const mobileRegex = /^(\+353|0)(8[3-9])\d{7}$/;
 
 //validatioon for email
 export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -37,10 +37,10 @@ export function checkUser(data) {
   if (!nameRegex.test(data.firstName))
     return { valid: false, message: 'First name is not valid, please try again' };
   if (!nameRegex.test(data.lastName))
-    return { valid: false, message: 'First name is not valid, please try again' };
+    return { valid: false, message: 'Last name is not valid, please try again' };
   if (!addressRegex.test(data.address))
     return { valid: false, message: 'Address is not valid, please try again' };
-  if (!numberRegex.test(data.mobile))
+  if (!mobileRegex.test(data.mobile))
     return { valid: false, message: 'Mobile number is not valid, please try again' };
   if (!emailRegex.test(data.email))
     return { valid: false, message: 'Email address is not valid, please try again' };
