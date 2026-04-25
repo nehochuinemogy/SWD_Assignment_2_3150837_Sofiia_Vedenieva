@@ -40,7 +40,7 @@ export default function AddPage() {
   const [errors,  setErrors]  = useState({});
   const [status,  setStatus]  = useState(null);  
   const [loading, setLoading] = useState(false);
-}
+
 // clearing error and updating feild
 function handleFieldChange(e) {
     const { name, value } = e.target;
@@ -109,6 +109,206 @@ function handleFieldChange(e) {
       }
     } catch {
       setStatus({ 
-        type: 'error', message: 'Network error. Please try again.' });
+        type: 'error', message: 'error. Please try again.' });
     }
+  } 
+//JSX
+  return (
+  <div className="option">
+    <h1>Add appliance</h1>
+        {status && status.type === 'success' && (
+        <p>{status.message} <Link href="/">Return to Home</Link></p>)}        {status && status.type === 'error' &&
+        (<p>{status.message}</p> )}
+
+    <form onSubmit={handleSubmit}>
+      <h2>User</h2>
+      <div className="form">
+        <div className="input">
+          <label>First name</label>
+          <input 
+            type="text"
+            name="firstName"
+            value={form.firstName}
+            onChange={handleFieldChange}
+            placeholder="Sofiia"
+            required
+          />
+          {errors.firstName && <span className="error">{errors.firstName}</span>}
+        </div>
+
+        <div className="input">
+          <label>Last name</label>
+          <input 
+            type="text"
+            name="lastName"
+            value={form.lastName}
+            onChange={handleFieldChange}
+            placeholder="Vedenieva"
+            required
+          />
+          {errors.lastName && <span className="error">{errors.lastName}</span>}
+        </div>
+
+        <div className="input">
+          <label>Home address</label>
+          <input 
+            type="text"
+            name="address"
+            value={form.address}
+            onChange={handleFieldChange}
+            placeholder="South Circular Road, Dublin 8"
+            required
+          />
+          {errors.address && <span className="error">{errors.address}</span>}
+        </div>
+
+        <div className="input">
+          <label>Mobile number</label>
+          <input 
+            type="tel"
+            name="mobile"
+            value={form.mobile}
+            onChange={handleFieldChange}
+            placeholder="080 000 0000"
+            required
+          />
+          {errors.mobile && <span className="error">{errors.mobile}</span>}
+        </div>
+
+        <div className="input">
+          <label>Eircode</label>
+          <input 
+            type="text"
+            name="eircode"
+            value={form.eircode}
+            onChange={handleFieldChange}
+            placeholder="D00 AB00"
+            required
+          />
+          {errors.eircode && <span className="error">{errors.eircode}</span>}
+        </div>
+
+        <div className="input">
+          <label>Email address</label>
+          <input 
+            type="email"
+            name="email"
+            value={form.email}
+            onChange={handleFieldChange}
+            placeholder="hello@gmail.com"
+            required
+          />
+          {errors.email && <span className="error">{errors.email}</span>}
+        </div>
+
+      </div>
+
+      <h2>Appliance </h2>
+      <div className="form">
+
+        <div className="input">
+          <label>Appliance type</label>
+          <select 
+            name="applianceType"
+            value={form.applianceType}
+            onChange={handleFieldChange}
+            required
+          >
+            <option value="">Select:</option>
+            {APPLIANCE_TYPES.map(type => (
+              <option key={type} value={type}>{type}</option>
+            ))}
+          </select>
+          {errors.applianceType && <span className="error">{errors.applianceType}</span>}
+        </div>
+
+        <div className="input">
+          <label>Brand</label>
+          <input 
+            type="text"
+            name="brand"
+            value={form.brand}
+            onChange={handleFieldChange}
+            placeholder="Lenovo"
+            required
+          />
+          {errors.brand && <span className="error">{errors.brand}</span>}
+        </div>
+
+        <div className="input">
+          <label>Model number</label>
+          <input 
+            type="text"
+            name="model"
+            value={form.model}
+            onChange={handleFieldChange}
+            placeholder="ABCD12345"
+            required
+          />
+          {errors.model && <span className="error">{errors.model}</span>}
+        </div>
+
+        <div className="input">
+          <label>Serial Number</label>
+          <input 
+            type="text"
+            name="serial"
+            value={form.serial}
+            onChange={handleFieldChange}
+            placeholder="SAMSUNG-S5"
+            required
+          />
+          {errors.serial && <span className="error">{errors.serial}</span>}
+        </div>
+
+        <div className="input">
+          <label>Purchase date</label>
+          <input 
+            type="date"
+            name="purchase"
+            value={form.purchase}
+            onChange={handleFieldChange}
+            required
+          />
+          {errors.purchase && <span className="error">{errors.purchase}</span>}
+        </div>
+
+        <div className="input">
+          <label>Warranty expiry date</label>
+          <input 
+            type="date"
+            name="warranty"
+            value={form.warranty}
+            onChange={handleFieldChange}
+            required
+          />
+          {errors.warranty && <span className="error">{errors.warranty}</span>}
+        </div>
+
+        <div className="input">
+          <label>Cost (€)</label>
+          <input 
+            type="number"
+            step="0.01"
+            min="0"
+            name="cost"
+            value={form.cost}
+            onChange={handleFieldChange}
+            placeholder="e.g. 599.99"
+            required
+          />
+          {errors.cost && <span className="error">{errors.cost}</span>}
+        </div>
+
+      </div>
+
+      <button type="submit">
+       <p>submit</p>
+      </button>
+
+    </form>
+
+    <Link href="/">Back to home</Link>
+  </div>
+);
 }
