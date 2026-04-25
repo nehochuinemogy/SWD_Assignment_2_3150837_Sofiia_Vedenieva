@@ -83,3 +83,32 @@ function handleFieldChange(e) {
         setErrors(fieldErrors);
     return Object.keys(fieldErrors).length === 0;
     }
+
+    //form submission
+      async function handleSubmit(e) {
+    e.preventDefault();
+    //if vallidation fails return;
+    if (!validateForm()) 
+        return;
+     setStatus(null);
+    try {
+        //POSt rewurst for API
+      const response = await fetch('/api/appliances/add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      //json response
+      const data = await response.json();
+   if (response.ok) {
+        setStatus({ type: 'success', message: data.message });
+        setForm(emptyForm); // reset form on success
+      } else {
+        setStatus({ 
+            type: 'error', message: data.message || 'Failed to add appliance.' });
+      }
+    } catch {
+      setStatus({ 
+        type: 'error', message: 'Network error. Please try again.' });
+    }
+}
