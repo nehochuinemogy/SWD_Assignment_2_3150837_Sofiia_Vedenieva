@@ -65,5 +65,85 @@ export default function DeletePage() {
     }
   }
 
+  return (
+    <div className="option">
+      <h1>Delete appliance</h1>
 
+        <form onSubmit={handleLookup}>
+          <div className="input">
+            <label>Serial number</label>
+            <input
+              type="text"
+              value={serialInput}
+              onChange={(e) => { 
+                setSerialInput(e.target.value); 
+                setSearchError(''); 
+              }}
+              placeholder="SAMSUNG-S5"
+              required
+            />
+            {searchError && <span className="error">{searchError}</span>}
+          </div>
+          <button type="submit">
+            <p>Submit</p>
+          </button>
+        </form>
+
+        <div>
+          <div className="form">
+            <div className="input">
+              <label>Serial number</label>
+              <p>{appliance.SerialNumber}</p>
+            </div>
+            
+            <div className="input">
+              <label>Type</label>
+              <p>{appliance.ApplianceType}</p>
+            </div>
+            
+            <div className="input">
+              <label>Brand</label>
+              <p>{appliance.Brand}</p>
+            </div>
+            
+            <div className="input">
+              <label>Model number</label>
+              <p>{appliance.ModelNumber}</p>
+            </div>
+            
+            <div className="input">
+              <label>Registered to</label>
+              <p>{appliance.FirstName} {appliance.LastName}</p>
+            </div>
+            
+            <div className="input">
+              <label>Email</label>
+              <p>{appliance.Email}</p>
+            </div>
+            
+            <div className="input">
+              <label>Purchase date</label>
+              <p>{new Date(appliance.PurchaseDate).toLocaleDateString()}</p>
+            </div>
+            
+            <div className="input">
+              <label>Cost</label>
+              <p>€{parseFloat(appliance.Cost).toFixed(2)}</p>
+            </div>
+          </div>
+
+          {deleteError && <p> {deleteError}</p>}
+
+          <button onClick={handleConfirmDelete}>
+            <p>Delete</p>
+          </button>
+        
+        </div>
+        if (status.success) {
+        <p> Appliance deleted successfully. <Link href="/">Return to Home</Link></p>
+    }
+      <Link href="/">Back to home</Link>
+    </div>
+  );
 }
+
