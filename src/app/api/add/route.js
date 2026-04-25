@@ -24,6 +24,18 @@ export async function POST(request) {
       cost:                   body.cost, 
     }
 
+    //cheking if input is valid
+     const userValid = checkUser(cleanData);
+    if (!userValid.valid)
+      return NextResponse.json({ message: userValid.message }, { status: 400 });
+
+    const applianceValid = checkAppliance(cleanData);
+    if (!applianceValid.valid)
+      return NextResponse.json({ message: applianceValid.message }, { status: 400 });
+    
+    //connection pool
+    const conn = await pool.getConnection();
+    
 }catch {
 
 }
