@@ -36,6 +36,21 @@ export async function POST(request) {
     //connection pool
     const conn = await pool.getConnection();
     
+    try {
+      // checking is serail number already exists
+      const [existAppliances] = await conn.execute(
+        'SELECT ApplianceID FROM Appliances WHERE SerialNumber = ?',
+        [data.serial]
+      );
+
+      //showing message 
+      if (existAppliances.length > 0) {
+        conn.release();
+        return NextResponse.json({ message: 'Appliance exists' }, { status: 409 });
+      }
+}catch {
+
+}
 }catch {
 
 }
