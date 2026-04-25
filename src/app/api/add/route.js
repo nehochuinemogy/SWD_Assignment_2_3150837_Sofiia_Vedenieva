@@ -88,10 +88,13 @@ export async function POST(request) {
         ]
       );
 
-}catch {
-
+        conn.release();
+      return NextResponse.json({ message: 'Appliance added successfully' }, { status: 201 });
+}catch (dbError) {
+    conn.release();
+    throw dbError;
 }
-}catch {
-
+}catch(error) {
+    return NextResponse.json({ message: 'Error' }, { status: 500 });
 }
 }
