@@ -23,7 +23,7 @@ export async function GET(request) {
        FROM Appliances a
        JOIN Users u ON a.UserID = u.UserID
        WHERE a.SerialNumber = ?`,
-      [serialNumber]
+      [serial]
     );
     if (rows.length === 0) {
       return NextResponse.json({ message: 'Appliance not found,please try again' }, { status: 404 });
@@ -32,6 +32,6 @@ export async function GET(request) {
 
   } catch (error) {
     console.error('error');
-    return NextResponse.json({ message: 'Erro, please try again.' }, { status: 500 });
+    return NextResponse.json({ message: 'Error, please try again.' }, { status: 500 });
   }
 }
