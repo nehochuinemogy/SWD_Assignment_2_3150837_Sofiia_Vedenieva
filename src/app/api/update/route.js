@@ -23,6 +23,20 @@ export async function PUT(request) {
       email:cleanInput(body.email),
       eircode:cleanInput(body.eircode),
     };
+    //checking if data is valid
+    if (!(data.applianceID) || !(data.userID)) {
+      return NextResponse.json({ message: 'Invalid appliance or user ID.' }, { status: 400 });
+    }
+
+     const userCheck = checkUser(data);
+    if (!userCheck.valid)
+      return NextResponse.json({ message: userCheck.message }, { status: 400 });
+
+    const applianceCheck = checkAppliance(data);
+    if (!applianceCheck.valid)
+      return NextResponse.json({ message: applianceCheck.message }, { status: 400 });
+
+    const conn = await pool.getConnection();
 }catch {
 }
 }
