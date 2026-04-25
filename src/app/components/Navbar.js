@@ -12,7 +12,7 @@ export default function Navbar() {
         <nav className="navbar">
             <span className="navbar-name">Appliance inventory</span>
             <ul className="navbar-links">
-                {navLinks.map((link) => (
+                {links.map((link) => (
                     <li key={link.href}>
                         <Link href={link.href}>{link.label}</Link>
                     </li>

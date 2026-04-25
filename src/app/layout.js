@@ -2,9 +2,6 @@ import { Red_Hat_Display } from 'next/font/google';  // Add this import
 import './globals.css';
 import Navbar from './components/Navbar';
 
-const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] });
-const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin'] });
-
 
 const redHatDisplay = Red_Hat_Display({
   variable: '--font-red-hat',
@@ -20,7 +17,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${redHatDisplay.variable}`}>
+    <html lang="en" className={` ${redHatDisplay.variable}`}>
       <body>
         <Navbar />
         <main className="main">
