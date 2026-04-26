@@ -117,9 +117,7 @@ function handleFieldChange(e) {
   return (
   <div className="option">
     <h1>Add appliance</h1>
-        {status && status.type === 'success' && (
-        <p>{status.message} <Link href="/">Return to Home</Link></p>)}        {status && status.type === 'error' &&
-        (<p>{status.message}</p> )}
+
 
     <form onSubmit={handleSubmit}>
       <h2>User</h2>
@@ -308,8 +306,9 @@ function handleFieldChange(e) {
       </button>
 
     </form>
-
-    <Link href="/">Back to home</Link>
+  {status && status.type === 'success' && (
+        <p>{status.message} <Link href="/">Return to home</Link></p>)}        {status && status.type === 'error' &&
+        (<p>{status.message}</p> )}
   </div>
 );
 }

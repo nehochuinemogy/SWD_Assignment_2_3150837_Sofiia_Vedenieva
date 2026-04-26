@@ -9,8 +9,8 @@ const links = [
 ];
 export default function Navbar() {
     return (
-        <nav className="navbar">
-            <span className="navbar-name">Appliance inventory</span>
+        <div className="navbar">
+            <div className="navbar-name">Appliance inventory</div>
             <ul className="navbar-links">
                 {links.map((link) => (
                     <li key={link.href}>
@@ -18,6 +18,6 @@ export default function Navbar() {
                     </li>
                 ))}
             </ul>
-        </nav>
+        </div>
     );
 }

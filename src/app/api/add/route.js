@@ -96,7 +96,6 @@ export async function POST(request) {
       conn.release();
       throw dbError;
     }
-
   } catch(error) {
     return NextResponse.json({ message: 'Error' }, { status: 500 });
   }

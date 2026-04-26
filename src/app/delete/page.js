@@ -57,8 +57,8 @@ export default function DeletePage() {
     const data = await response.json();
 
     if (response.ok) {
-      setDeleted(true);    // ← ADD THIS LINE
-      setAppliance(null);  // ← ADD THIS LINE
+      setDeleted(true);  
+      setAppliance(null);  
     } else {
       setDeleteError(data.message || 'Could not delete. Please try again.');
     }
@@ -136,6 +136,7 @@ export default function DeletePage() {
             )}
           {deleteError && <p> {deleteError}</p>}
 
+        
           <button onClick={handleConfirmDelete}>
             <p>Delete</p>
           </button>
