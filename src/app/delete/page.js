@@ -7,7 +7,7 @@ export default function DeletePage() {
 
   const [serialInput, setSerialInput] = useState('');
   const [searchError, setSearchError] = useState('');
-  
+  const [deleted, setDeleted] = useState(false);
   // Delete confirmation state
   const [appliance, setAppliance] = useState(null);  //storing found apppliance
   const [deleteError, setDeleteError] = useState('');
@@ -47,24 +47,25 @@ export default function DeletePage() {
   async function handleConfirmDelete() {
     //clearing previous 
     setDeleteError('');
-
     try {
-      // sending delete request
-      const response = await fetch('/api/delete', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ serial: appliance.SerialNumber }),
-      });
-      const data = await response.json();
+    // sending delete request
+    const response = await fetch('/api/delete', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ serial: appliance.SerialNumber }),
+    });
+    const data = await response.json();
 
-      if (!response.ok) {
-        setDeleteError(data.message || 'Could not delete. Please try again.');
-      }
-    } catch {
-      setDeleteError('Error. Please try again.');
+    if (response.ok) {
+      setDeleted(true);    // ← ADD THIS LINE
+      setAppliance(null);  // ← ADD THIS LINE
+    } else {
+      setDeleteError(data.message || 'Could not delete. Please try again.');
     }
+  } catch {
+    setDeleteError('Error. Please try again.');
   }
-
+  }
   return (
     <div className="option">
       <h1>Delete appliance</h1>
@@ -90,6 +91,7 @@ export default function DeletePage() {
         </form>
 
         <div>
+            {appliance && (
           <div className="form">
             <div className="input">
               <label>Serial number</label>
@@ -131,7 +133,7 @@ export default function DeletePage() {
               <p>€{parseFloat(appliance.Cost).toFixed(2)}</p>
             </div>
           </div>
-
+            )}
           {deleteError && <p> {deleteError}</p>}
 
           <button onClick={handleConfirmDelete}>
@@ -139,9 +141,9 @@ export default function DeletePage() {
           </button>
         
         </div>
-        if (status.success) {
-        <p> Appliance deleted successfully. <Link href="/">Return to Home</Link></p>
-    }
+       {deleted && (
+        <p>Appliance deleted successfully<Link href="/">Return to Home</Link></p>
+)}
       <Link href="/">Back to home</Link>
     </div>
   );
