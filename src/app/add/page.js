@@ -7,6 +7,7 @@ import {
   typeRegex, brandRegex, modelRegex, serialRegex, costRegex,
 } from '../lib/validation';
 
+//implementing appliance types
 const APPLIANCE_TYPES = [
   'Oven', 
   'Dishwasher', 
@@ -39,7 +40,6 @@ export default function AddPage() {
   const [form,    setForm]    = useState(emptyForm);
   const [errors,  setErrors]  = useState({});
   const [status,  setStatus]  = useState(null);  
-  const [loading, setLoading] = useState(false);
 
 // clearing error and updating feild
 function handleFieldChange(e) {
@@ -48,6 +48,7 @@ function handleFieldChange(e) {
     setErrors(prev => ({ ...prev, [name]: '' }));
   }
 
+  //validating form
    function validateForm() {
     const fieldErrors = {};
 
