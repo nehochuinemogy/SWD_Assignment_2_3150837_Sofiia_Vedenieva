@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import pool from '../../../lib/db';
-import { checkUserData, checkApplianceData, cleanInput } from '../../../lib/validation';
+import pool from '../../lib/db';
+import { checkUser, checkAppliance, cleanInput } from '../../lib/validation';
 
 export async function POST(request) {
   try {
@@ -25,7 +25,7 @@ export async function POST(request) {
     }
 
     //cheking if input is valid
-     const userValid = checkUser(cleanData);
+    const userValid = checkUser(cleanData);
     if (!userValid.valid)
       return NextResponse.json({ message: userValid.message }, { status: 400 });
 
@@ -37,10 +37,10 @@ export async function POST(request) {
     const conn = await pool.getConnection();
     
     try {
-      // checking is serail number already exists
+      // checking is serial number already exists
       const [existAppliances] = await conn.execute(
         'SELECT ApplianceID FROM Appliances WHERE SerialNumber = ?',
-        [data.serial]
+        [cleanData.serial]
       );
 
       //showing message 
@@ -52,7 +52,7 @@ export async function POST(request) {
       //checking if email exists
       const [existUsers] = await conn.execute(
         'SELECT UserID FROM Users WHERE Email = ?',
-        [data.email]
+        [cleanData.email]
       );
 
       let userId;
@@ -65,12 +65,13 @@ export async function POST(request) {
         const [insertResult] = await conn.execute(
           `INSERT INTO Users (FirstName, LastName, Address, Mobile, Email, Eircode)
            VALUES (?, ?, ?, ?, ?, ?)`,
-          [data.firstName, data.lastName, data.address, data.mobile, data.email, data.eircode]
+          [cleanData.firstName, cleanData.lastName, cleanData.address,
+           cleanData.mobile, cleanData.email, cleanData.eircode]
         );
         userId = insertResult.insertId;
       }
 
-      //inserting appliacne data with user data connected by user id
+      //inserting appliance data with user data connected by user id
       await conn.execute(
         `INSERT INTO Appliances
            (UserID, ApplianceType, Brand, ModelNumber, SerialNumber,
@@ -78,23 +79,25 @@ export async function POST(request) {
          VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
         [
           userId,
-          data.applianceType,
-          data.brand,
-          data.model,
-          data.serial,
-          data.purchase,
-          data.warranty,
-          parseFloat(data.cost),
+          cleanData.applianceType,
+          cleanData.brand,
+          cleanData.model,
+          cleanData.serial,
+          cleanData.purchase,
+          cleanData.warranty,
+          parseFloat(cleanData.cost),
         ]
       );
 
-        conn.release();
+      conn.release();
       return NextResponse.json({ message: 'Appliance added successfully' }, { status: 201 });
-}catch (dbError) {
-    conn.release();
-    throw dbError;
-}
-}catch(error) {
+
+    } catch (dbError) {
+      conn.release();
+      throw dbError;
+    }
+
+  } catch(error) {
     return NextResponse.json({ message: 'Error' }, { status: 500 });
-}
+  }
 }
