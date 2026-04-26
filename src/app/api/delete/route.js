@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import pool from '../../../lib/db';
-import { serialRegex, cleanInput } from '../../../lib/validation';
+import pool from '../../lib/db';
+import { serialRegex, cleanInput } from '../../lib/validation';
 
 export async function DELETE(request) {
     try {

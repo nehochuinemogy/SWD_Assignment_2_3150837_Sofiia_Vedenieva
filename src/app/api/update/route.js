@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import pool from '../../../lib/db';
-import { checkUser, checkAppliance, cleanInput } from '../../../lib/validation';
+import pool from '../../lib/db';
+import { checkUser, checkAppliance, cleanInput } from '../../lib/validation';
 
 export async function PUT(request) {
   try {
