@@ -104,18 +104,24 @@ p {
   letter-spacing: 0.04rem;
 }
 
+
 .input input,
 .input select {
   width: 100%;
   padding: 1% 1.5%;
-  border: 0.1rem solid #f9f9f9;
+  border: 0.1rem solid #e0e0e0;
   border-radius: 0.6rem;
   font-size: 0.95rem;
   font-family: inherit;
-  background: #fafafa;
+  background: #ebebeb;
   transition: border 0.2s;
 }
 
+.input input:-webkit-autofill,
+.input input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #ebebeb inset !important;
+  -webkit-text-fill-color: #313131 !important;
+}
 .input input:focus,
 .input select:focus {
   outline: none;
