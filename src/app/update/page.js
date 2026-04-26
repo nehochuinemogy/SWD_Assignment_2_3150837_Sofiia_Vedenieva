@@ -38,7 +38,7 @@ export default function UpdatePage() {
       );
       const data = await response.json();
 
-      //ia appliance found populating form
+      //if appliance found populating form
       if (response.ok && data.appliance) {
         const a = data.appliance;
         setForm({
@@ -72,7 +72,8 @@ export default function UpdatePage() {
     setForm(prev => ({ ...prev, [name]: value }));
     setErrors(prev => ({ ...prev, [name]: '' }));
   }
-//validation form
+
+  //validation form
   function validateForm() {
     const fieldErrors = {};
 
@@ -108,7 +109,7 @@ export default function UpdatePage() {
     return Object.keys(fieldErrors).length === 0;
   }
 
-    //sending updated appliacne data 
+  //sending updated appliance data 
   async function handleUpdate(e) {
     e.preventDefault();
     if (!validateForm()) return;
@@ -128,36 +129,38 @@ export default function UpdatePage() {
       } else {
         setStatus({ type: 'error', message: data.message });
       }
-  }catch {
-    setStatus({ type: 'error', message: 'Error. Please try again.' });
+    } catch {
+      setStatus({ type: 'error', message: 'Error. Please try again.' });
+    }
   }
-}
 
   return (
     <div className="option">
       <h1>Update appliance</h1>
-      {/*Searching form */}
-        <form onSubmit={handleLookup}>
-          <div className="input">
-            <label>Serial number</label>
-            <input
-              type="text"
-              value={serialInput}
-              onChange={(e) => { 
-                setSerialInput(e.target.value); 
-                setSearchError(''); 
-              }}
-              placeholder="SAMSUNG-S5"
-              required
-            />
-            {/* Error*/}
-            {searchError && <span className="error">{searchError}</span>}
-          </div>
-          <button type="submit">
-            <p>Submit</p>
-          </button>
-        </form>
 
+      {/*Searching form */}
+      <form onSubmit={handleLookup}>
+        <div className="input">
+          <label>Serial number</label>
+          <input
+            type="text"
+            value={serialInput}
+            onChange={(e) => { 
+              setSerialInput(e.target.value); 
+              setSearchError(''); 
+            }}
+            placeholder="SAMSUNG-S5"
+            required
+          />
+          {/* Error*/}
+          {searchError && <span className="error">{searchError}</span>}
+        </div>
+        <button type="submit">
+          <p>Submit</p>
+        </button>
+      </form>
+
+      {form && (
         <>
           {/* status message  */}
           {status && status.type === 'success' && (
@@ -336,6 +339,7 @@ export default function UpdatePage() {
               <p>Submit</p>
             </button>
           </form>
+
           <button onClick={() => {
             setForm(null); 
             setStatus(null); 
@@ -343,6 +347,8 @@ export default function UpdatePage() {
             <p>Search again</p>
           </button>
         </>
+      )}
+
       <Link href="/">Back to home</Link>
     </div>
   );
