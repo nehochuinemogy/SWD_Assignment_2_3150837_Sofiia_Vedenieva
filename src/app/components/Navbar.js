@@ -8,6 +8,7 @@ const links = [
     { label: 'Delete', href: '/delete' },
 ];
 export default function Navbar() {
+    //navigation bar
     return (
         <div className="navbar">
             <div className="navbar-name">Appliance inventory</div>

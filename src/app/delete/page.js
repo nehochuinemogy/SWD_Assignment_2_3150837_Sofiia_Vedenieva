@@ -5,12 +5,17 @@ import { serialRegex } from '../lib/validation';
 
 export default function DeletePage() {
 
-  const [serialInput, setSerialInput] = useState('');
-  const [searchError, setSearchError] = useState('');
-  const [deleted, setDeleted] = useState(false);
+  const [serialInput, setSerialInput] =
+   useState('');
+  const [searchError, setSearchError] = 
+  useState('');
+  const [deleted, setDeleted] = 
+  useState(false);
   // Delete confirmation state
-  const [appliance, setAppliance] = useState(null);  //storing found apppliance
-  const [deleteError, setDeleteError] = useState('');
+  const [appliance, setAppliance] = 
+  useState(null);  //storing found apppliance
+  const [deleteError, setDeleteError] = 
+  useState('');
 
 
   //searching appliance by serial number

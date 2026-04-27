@@ -12,12 +12,13 @@ const APPLIANCE_TYPES = [
 ];
 
 export default function UpdatePage() {
-  const [serialInput,   setSerialInput]   = useState('');
-  const [searchError,   setSearchError]   = useState('');
+  //Stroing data
+  const [serialInput, setSerialInput] = useState('');
+  const [searchError, setSearchError] = useState('');
 
-  const [form,          setForm]          = useState(null);
-  const [errors,        setErrors]        = useState({});
-  const [status,        setStatus]        = useState(null);
+  const [form,setForm]= useState(null);
+  const [errors,setErrors] = useState({});
+  const [status,setStatus]= useState(null);
 
   //searching appliance by serial num
   async function handleLookup(e) {

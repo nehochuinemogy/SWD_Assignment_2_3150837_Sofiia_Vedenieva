@@ -4,10 +4,18 @@ import Link from 'next/link';
 import { serialRegex } from '../lib/validation';
 
 export default function SearchPage() {
-  const [serialInput, setSerialInput] = useState('');
-  const [inputError,  setInputError]  = useState('');
-  const [result,      setResult]      = useState(null);
-  const [notFound,    setNotFound]    = useState(false);
+  //Storing inputs
+  const [serialInput, setSerialInput]= 
+  useState('');
+
+  const [inputError,setInputError]= 
+  useState('');
+
+  const [result,setResult]= 
+  useState(null);
+
+  const [notFound,setNotFound]= 
+  useState(false);
 
   // searching appliance by serial number
   async function handleSearch(e) {

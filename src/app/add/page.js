@@ -113,11 +113,10 @@ function handleFieldChange(e) {
         type: 'error', message: 'error. Please try again.' });
     }
   } 
-//JSX
+//JSX form 
   return (
   <div className="option">
     <h1>Add appliance</h1>
-
 
     <form onSubmit={handleSubmit}>
       <h2>User</h2>
@@ -213,6 +212,7 @@ function handleFieldChange(e) {
             onChange={handleFieldChange}
             required
           >
+            {/*Selecting applaicne */}
             <option value="">Select:</option>
             {APPLIANCE_TYPES.map(type => (
               <option key={type} value={type}>{type}</option>
@@ -293,7 +293,7 @@ function handleFieldChange(e) {
             name="cost"
             value={form.cost}
             onChange={handleFieldChange}
-            placeholder="e.g. 599.99"
+            placeholder="000.00"
             required
           />
           {errors.cost && <span className="error">{errors.cost}</span>}
@@ -302,7 +302,7 @@ function handleFieldChange(e) {
       </div>
 
       <button type="submit">
-       <p>submit</p>
+       <p>Submit</p>
       </button>
 
     </form>
